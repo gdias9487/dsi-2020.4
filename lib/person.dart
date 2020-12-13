@@ -1,13 +1,10 @@
 import 'package:dsi_app/constants.dart';
-import 'package:dsi_app/home.dart';
 import 'package:dsi_app/infra.dart';
-import 'package:dsi_app/register.dart';
-import 'package:dsi_app/person.dart';
-import 'package:dsi_app/forgot.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:dsi_app/person.dart';
 
-class LoginPage extends StatelessWidget {
+class PersonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DsiScaffold(
@@ -19,50 +16,43 @@ class LoginPage extends StatelessWidget {
             height: 100,
           ),
           Constants.spaceSmallHeight,
-          LoginForm(),
+          PersonForm(),
           Spacer(),
-          Padding(
-            padding: Constants.paddingMedium,
-            child: Text(
-              'App desenvolvido por Gabriel Alves para a disciplina de'
-              ' Desenvolvimento de Sistemas de Informação do BSI/UFRPE.',
-              style: Theme.of(context).textTheme.caption.copyWith(fontSize: 12),
-            ),
-          )
         ],
       ),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
+class PersonForm extends StatefulWidget {
   @override
-  LoginFormState createState() {
-    return LoginFormState();
+  PersonFormState createState() {
+    return PersonFormState();
   }
 }
 
-class LoginFormState extends State<LoginForm> {
+class PersonFormState extends State<PersonForm> {
   final _formKey = GlobalKey<FormState>();
 
-  void _forgotPassword() {
-    dsiHelper.go(context, ForgotPage());
-  }
-
-  void _person() {
+  void _Person() {
     if (!_formKey.currentState.validate()) return;
 
-    dsiHelper.go(context, PersonPage());
+    dsiDialog.showInfo(
+      context: context,
+      message: 'Seu cadastro foi realizado com sucesso.',
+      buttonPressed: () => dsiHelper..back(context)..back(context),
+    );
+
+    //A linha acima é equivalente a executar as duas linhas abaixo:
+    //Navigator.of(context).pop();
+    //Navigator.of(context).pop();
+    //
+    //Para maiores informações, leia sobre 'cascade notation' no Dart.
+    //https://dart.dev/guides/language/language-tour
   }
 
-  void _login() {
-    if (!_formKey.currentState.validate()) return;
-
-    dsiHelper.go(context, HomePage());
-  }
-
-  void _register() {
-    dsiHelper.go(context, RegisterPage());
+  void _cancel() {
+    dsiHelper.back(context);
   }
 
   @override
@@ -73,6 +63,14 @@ class LoginFormState extends State<LoginForm> {
         padding: Constants.paddingMedium,
         child: Column(
           children: <Widget>[
+            TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(labelText: 'sebola'),
+              validator: (String value) {
+                return value.isEmpty ? 'Email inválido.' : null;
+              },
+            ),
+            Constants.spaceSmallHeight,
             TextFormField(
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(labelText: 'Login*'),
@@ -89,39 +87,33 @@ class LoginFormState extends State<LoginForm> {
                 return value.isEmpty ? 'Senha inválida.' : null;
               },
             ),
-            Container(
-              alignment: Alignment.centerRight,
-              child: FlatButton(
-                child: Text('Esqueceu a senha?'),
-                padding: Constants.paddingMedium,
-                onPressed: _forgotPassword,
-              ),
+            Constants.spaceSmallHeight,
+            TextFormField(
+              keyboardType: TextInputType.visiblePassword,
+              obscureText: true,
+              decoration:
+                  const InputDecoration(labelText: 'Confirmação de Senha*'),
+              validator: (String value) {
+                return value.isEmpty
+                    ? 'As senhas digitadas não são iguais.'
+                    : null;
+              },
             ),
             Constants.spaceMediumHeight,
             SizedBox(
               width: double.infinity,
               child: RaisedButton(
-                child: Text('Login'),
-                onPressed: _login,
+                child: Text('Salvar'),
+                onPressed: _Person,
               ),
             ),
             FlatButton(
-              child: Text('Cadastre-se'),
+              child: Text('Cancelar'),
               padding: Constants.paddingSmall,
-              onPressed: _register,
+              onPressed: _cancel,
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget buildFlatButton(BuildContext context, String text, var onPressed) {
-    return SizedBox.expand(
-      child: FlatButton(
-        color: Theme.of(context).buttonColor,
-        child: Text(text),
-        onPressed: _login,
       ),
     );
   }

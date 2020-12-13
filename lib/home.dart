@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dsi_app/person.dart';
 import 'package:dsi_app/constants.dart';
 import 'package:dsi_app/infra.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +22,9 @@ class HomePage extends StatelessWidget {
       actions: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Icon(Icons.search),
+          child: FlatButton(
+            child: Icon(Icons.search_outlined),
+          ),
         ),
         Icon(Icons.more_vert),
       ],
