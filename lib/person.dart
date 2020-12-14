@@ -12,8 +12,15 @@ class PersonPage extends StatelessWidget {
         children: <Widget>[
           Spacer(),
           Image(
-            image: Images.bsiLogo,
-            height: 100,
+            image: Images.profile,
+            height: 200,
+          ),
+          Spacer(flex: 1),
+          Text(
+            'Insira suas informações abaixo:',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           ),
           Constants.spaceSmallHeight,
           PersonForm(),
@@ -39,7 +46,7 @@ class PersonFormState extends State<PersonForm> {
 
     dsiDialog.showInfo(
       context: context,
-      message: 'Seu cadastro foi realizado com sucesso.',
+      message: 'Usuário cadastrado com sucesso.',
       buttonPressed: () => dsiHelper..back(context)..back(context),
     );
 
@@ -64,51 +71,48 @@ class PersonFormState extends State<PersonForm> {
         child: Column(
           children: <Widget>[
             TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(labelText: 'sebola'),
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(labelText: 'Nome*'),
               validator: (String value) {
-                return value.isEmpty ? 'Email inválido.' : null;
+                return value.isEmpty ? 'Preencha seus dados' : null;
               },
             ),
             Constants.spaceSmallHeight,
             TextFormField(
               keyboardType: TextInputType.text,
-              decoration: const InputDecoration(labelText: 'Login*'),
+              decoration: const InputDecoration(labelText: 'Sobrenome*'),
               validator: (String value) {
-                return value.isEmpty ? 'Login inválido.' : null;
+                return value.isEmpty ? 'Preencha seus dados' : null;
               },
             ),
             Constants.spaceSmallHeight,
             TextFormField(
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'Senha*'),
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(
+                  labelText: 'Data de Nascimento* (DD/MM/AA)'),
               validator: (String value) {
-                return value.isEmpty ? 'Senha inválida.' : null;
+                return value.isEmpty ? 'Preencha seus dados' : null;
               },
             ),
             Constants.spaceSmallHeight,
             TextFormField(
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: true,
+              keyboardType: TextInputType.number,
               decoration:
-                  const InputDecoration(labelText: 'Confirmação de Senha*'),
+                  const InputDecoration(labelText: 'CPF* (Apenas números)'),
               validator: (String value) {
-                return value.isEmpty
-                    ? 'As senhas digitadas não são iguais.'
-                    : null;
+                return value.isEmpty ? 'Campo vazio' : null;
               },
             ),
             Constants.spaceMediumHeight,
             SizedBox(
               width: double.infinity,
               child: RaisedButton(
-                child: Text('Salvar'),
+                child: Text('Cadastrar'),
                 onPressed: _Person,
               ),
             ),
             FlatButton(
-              child: Text('Cancelar'),
+              child: Text('Voltar'),
               padding: Constants.paddingSmall,
               onPressed: _cancel,
             ),

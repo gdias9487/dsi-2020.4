@@ -7,23 +7,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  var context;
+
   @override
   Widget build(BuildContext context) {
     return DsiScaffold(
-      appBar: _buildAppBar(),
+      appBar: _buildAppBar(context),
       body: _buildBody(),
     );
   }
 
-  Widget _buildAppBar() {
+  Widget _buildAppBar(BuildContext context) {
     return AppBar(
       leading: Icon(Icons.menu),
       title: Text('Home'),
       actions: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: FlatButton(
-            child: Icon(Icons.search_outlined),
+            child: Icon(Icons.search),
+            color: Colors.green,
+            minWidth: 0,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PersonPage()));
+            },
           ),
         ),
         Icon(Icons.more_vert),

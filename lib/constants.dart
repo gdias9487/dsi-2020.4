@@ -12,6 +12,7 @@ class Constants {
 
 class Images {
   static final AssetImage bsiLogo = AssetImage('images/logo/bsi.png');
+  static final AssetImage profile = AssetImage('images/logo/batprofile.jpg');
   static final AssetImage bsiLogoWhite =
       AssetImage('images/logo/bsi-white.png');
   static final AssetImage bsiLogoBlack =
