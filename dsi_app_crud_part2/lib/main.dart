@@ -1,12 +1,21 @@
 import 'package:dsi_app/constants.dart';
 import 'package:dsi_app/login.dart';
 import 'package:flutter/material.dart';
+import 'package:dsi_app/person.dart';
 
 void main() {
-  runApp(DSIApp());
+  runApp(DSIApp(MaterialApp(
+    initialRoute: '/',
+    routes: <String, WidgetBuilder>{
+      '/': (context) => LoginPage(),
+      '/person': (context) => PersonPage()
+    },
+  )));
 }
 
 class DSIApp extends StatelessWidget {
+  DSIApp(MaterialApp materialApp);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

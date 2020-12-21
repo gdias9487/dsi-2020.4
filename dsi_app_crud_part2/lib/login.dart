@@ -2,6 +2,8 @@ import 'package:dsi_app/constants.dart';
 import 'package:dsi_app/home.dart';
 import 'package:dsi_app/infra.dart';
 import 'package:dsi_app/register.dart';
+import 'package:dsi_app/person.dart';
+import 'package:dsi_app/forgot.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,13 +46,13 @@ class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
   void _forgotPassword() {
-    dsiDialog.showInfo(
-      context: context,
-      title: 'Warning',
-      message: '''Falta implementar esta função.\n'''
-          '''Agora é com você:\n'''
-          '''Implemente uma tela para esta funcionalidade!''',
-    );
+    dsiHelper.go(context, ForgotPage());
+  }
+
+  void _person() {
+    if (!_formKey.currentState.validate()) return;
+
+    dsiHelper.go(context, PersonPage());
   }
 
   void _login() {
@@ -91,7 +93,7 @@ class LoginFormState extends State<LoginForm> {
               alignment: Alignment.centerRight,
               child: FlatButton(
                 child: Text('Esqueceu a senha?'),
-                padding: Constants.paddingSmall,
+                padding: Constants.paddingMedium,
                 onPressed: _forgotPassword,
               ),
             ),
